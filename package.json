@@ -1,13 +1,13 @@
 {
-  "name": "15tut",
+  "name": "final2",
   "version": "1.0.0",
-  "description": "MongoDB tutorial",
+  "description": "MEN Final",
   "main": "server.js",
   "scripts": {
     "start": "node server",
     "dev": "nodemon server"
   },
-  "author": "Dave Gray",
+  "author": "James Pow",
   "license": "ISC",
   "engines": {
     "node": "14.x"
