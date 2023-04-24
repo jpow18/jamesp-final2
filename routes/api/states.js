@@ -5,12 +5,14 @@ const ROLES_LIST = require('../../config/roles_list');
 const verifyRoles = require('../../middleware/verifyRoles');
 
 router.route('/')
-    .get(statesController.getAllstates)
-    .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.createNewEmployee)
-    .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.updateEmployee)
-    .delete(verifyRoles(ROLES_LIST.Admin), statesController.deleteEmployee);
-
-router.route('/:id')
-    .get(statesController.getEmployee);
-
+    .get(statesController.getAllStates);
+    // .post(statesController.createNewFunfacts)
+    // //router.route('/:state')
+    // .get(statesController.getState);
+    
 module.exports = router;
+    
+
+    //     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.createNewEmployee)
+    //     .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.updateEmployee)
+    //     .delete(verifyRoles(ROLES_LIST.Admin), statesController.deleteEmployee);
