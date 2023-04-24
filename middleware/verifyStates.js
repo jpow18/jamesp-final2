@@ -13,3 +13,5 @@ const verifyStates = (state) => {
     return false;
   }
 }
+
+module.exports = verifyStates;
