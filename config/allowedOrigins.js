@@ -5,7 +5,8 @@ const allowedOrigins = [
     'http://localhost:3000',
     'https://dazzling-snickerdoodle-777101.netlify.app/',
     'https://www.bbc.com/',
-    'https://www.google.com'
+    'https://www.google.com',
+    'https://replit.com/@jpow18/jamesp-final2'
 ];
 
 module.exports = allowedOrigins;
