@@ -15,21 +15,21 @@ const getOneState = async (req, res) => {
 }
 
 const createNewFunfact = async (req, res) => {
-  if (!req?.body?.funfacts || !req?.params?.stateCode) {
-    res.status(400).json({ error: 'Missing required fields' });
+  if (!req?.body?.funfacts) {
+    res.status(400).json({ message: 'State fun facts value required' });
     return;
   }
 
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
   if (!verifyState(stateCode)) {
-    res.status(400).json({ error: 'Invalid state code' });
+    res.status(400).json({ message: 'Invalid state code' });
     return;
   }
 
   // verify that funfacts is an array
   if (!Array.isArray(req.body.funfacts)) {
-    return res.status(400).json({ error: 'funfacts must be an array' });
+    return res.status(400).json({ message: 'State fun facts value must be an array' });
   }
 
   try {
