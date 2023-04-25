@@ -6,7 +6,9 @@ const verifyRoles = require('../../middleware/verifyRoles');
 
 router.route('/')
     .get(statesController.getAllStates);
-router.route('/:stateCode')
+
+router.route('/:stateCode/funfact')
+    //.get() will get random fun fact from one state
     .post(statesController.createNewFunfact);
     // //router.route('/:state')
     // .get(statesController.getState);
