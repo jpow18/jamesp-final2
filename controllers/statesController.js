@@ -35,7 +35,7 @@ const createNewFunfact = async (req, res) => {
   try {
     const result = await State.findOneAndUpdate(
       { stateCode },
-      { $addToSet: { funfacts: req.body.funfacts } },
+      { $push: { funfacts: req.body.funfacts } },
       { new: true, upsert: true }
     );
     res.status(200).json(result);
