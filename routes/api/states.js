@@ -6,7 +6,8 @@ const verifyRoles = require('../../middleware/verifyRoles');
 
 router.route('/')
     .get(statesController.getAllStates);
-    // .post(statesController.createNewFunfact)
+router.route('/:stateCode')
+    .post(statesController.createNewFunfact);
     // //router.route('/:state')
     // .get(statesController.getState);
     
