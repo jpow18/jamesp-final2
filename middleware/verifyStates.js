@@ -5,13 +5,8 @@ for (i = 0; i < 50; i++) {
   stateAbbreviations.push(states[i].code);
 }
 
-
 const verifyStates = (state) => {
-  if (stateAbbreviations.find(state)) {
-    return true;
-  } else {
-    return false;
-  }
+  return stateAbbreviations.includes(state.toUpperCase());
 }
 
 module.exports = verifyStates;
