@@ -23,13 +23,13 @@ const getOneState = async (req, res) => {
 
   const state = data.states.find(s => s.code === stateCode);
 
-  const funFact = State.states.find(fact => fact.state === state.state);
+  const funFact = await State.findOne({ _stateCode: stateCode }).select('funfacts').exec();
+  console.log(funFact);
   if (!funFact) {
     return res.json({ message: `No Fun Facts found for ${state}`})
   }
 
-  
-  state.funfacts = funFact.funFacts;
+  state.funfacts = funFact;
   res.json(state);
 }
 
