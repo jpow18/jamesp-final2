@@ -40,6 +40,37 @@ const getOneState = async (req, res) => {
   res.json(state);
 }
 
+const getOneStateThing = async (req, res) => {
+  if (!req?.params?.stateCode) {
+    res.status(400).json({ message: 'Statecode required' });
+    return;
+  }
+
+  // Verify that stateCode is valid
+  const stateCode = req.params.stateCode.toUpperCase();
+  if (!verifyState(stateCode)) {
+    res.status(400).json({ message: 'Invalid state abbreviation parameter' });
+    return;
+  }
+
+  const state = data.states.find(s => s.code === stateCode);
+
+  let fact;
+  switch (req.params.something) {
+
+    case 'funfact':
+      // generate random funfact for this state or send back the appropriate message
+      break;
+    case 'capital':
+      fact = state.capital_city;
+
+      
+  }
+
+  res.json({ 'state': `${state.state}`, 'capital': `${fact}` });
+
+}
+
 const createNewFunfact = async (req, res) => {
   if (!req?.body?.funfacts) {
     res.status(400).json({ message: 'State fun facts value required' });
@@ -71,4 +102,4 @@ const createNewFunfact = async (req, res) => {
   }
 }
 
-module.exports = { getAllStates, getOneState, createNewFunfact };
+module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact };
