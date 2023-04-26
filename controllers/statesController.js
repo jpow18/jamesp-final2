@@ -62,12 +62,20 @@ const getOneStateThing = async (req, res) => {
       // generate random funfact for this state or send back the appropriate message
       break;
     case 'capital':
-      fact = state.capital_city;
-
-      
+      fact = { 'state': `${state.state}`, 'capital': `${state.capital_city}` }
+      break;
+    case 'nickname':
+      fact = { 'state': `${state.state}`, 'nickname': `${state.nickname}` }
+      break;
+    case 'population':
+      fact = { 'state': `${state.state}`, 'population': `${state.population}` }
+      break;
+    case 'admission':
+      fact = { 'state': `${state.state}`, 'addmitted': `${state.admission_date}` }
+      break;
   }
 
-  res.json({ 'state': `${state.state}`, 'capital': `${fact}` });
+  res.json(fact);
 
 }
 
