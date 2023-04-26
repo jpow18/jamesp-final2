@@ -12,16 +12,24 @@ const getOneState = async (req, res) => {
   if (!req?.params?.stateCode) {
     res.status(400).json({ message: 'Statecode required' });
     return;
-  } 
+  }
 
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
   if (!verifyState(stateCode)) {
-    res.status(400).json({ message: 'Invalid state code' });
+    res.status(400).json({ message: 'Invalid state abbreviation parameter' });
     return;
   }
 
   const state = data.states.find(s => s.code === stateCode);
+
+  const funFact = State.states.find(fact => fact.state === state.state);
+  if (!funFact) {
+    return res.json({ message: `No Fun Facts found for ${state}`})
+  }
+
+  
+  state.funfacts = funFact.funFacts;
   res.json(state);
 }
 
@@ -34,7 +42,7 @@ const createNewFunfact = async (req, res) => {
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
   if (!verifyState(stateCode)) {
-    res.status(400).json({ message: 'Invalid state code' });
+    res.status(400).json({ message: 'Invalid state abbreviation parameter' });
     return;
   }
 
