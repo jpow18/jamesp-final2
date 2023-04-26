@@ -11,8 +11,8 @@ router.route('/:stateCode')
     .get(statesController.getOneState);
 
 
-router.route('/:stateCode/funfact')
-    //.get() will get random fun fact from one state
+router.route('/:stateCode/:something')
+    .get(statesController.getOneStateThing)
     .post(statesController.createNewFunfact);
     // //router.route('/:state')
     // .get(statesController.getState);
