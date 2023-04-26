@@ -4,7 +4,15 @@ const State = require('../model/States');
 const verifyState = require('../middleware/verifyState');
 
 const getAllStates = async (req, res) => {
-  //const funfacts = await State.find();
+  // Loop over array held in data.states
+  for(const element of data.states) {
+    const stateCode = element.code;
+    const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
+    if (funFact) {
+      element.funfacts = funFact.funfacts;
+    }
+  }
+  
   res.json(data.states);
 }
 
