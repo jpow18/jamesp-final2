@@ -71,7 +71,7 @@ const getOneStateThing = async (req, res) => {
       fact = { 'state': `${state.state}`, 'population': `${state.population}` }
       break;
     case 'admission':
-      fact = { 'state': `${state.state}`, 'addmitted': `${state.admission_date}` }
+      fact = { 'state': `${state.state}`, 'admitted': `${state.admission_date}` }
       break;
   }
 
