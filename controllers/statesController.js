@@ -68,7 +68,7 @@ const getOneStateThing = async (req, res) => {
       fact = { 'state': `${state.state}`, 'nickname': `${state.nickname}` }
       break;
     case 'population':
-      fact = { 'state': `${state.state}`, 'population': `${state.population}` }
+      fact = { 'state': `${state.state}`, 'population': `${state.population.toLocaleString()}` }
       break;
     case 'admission':
       fact = { 'state': `${state.state}`, 'admitted': `${state.admission_date}` }
