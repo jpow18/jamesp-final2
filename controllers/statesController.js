@@ -60,6 +60,13 @@ const getOneStateThing = async (req, res) => {
 
     case 'funfact':
       // generate random funfact for this state or send back the appropriate message
+      const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
+      if (!funFact) {
+        return res.json({ message: `No Fun Facts found for ${state}` })
+      } else {
+        const randomIndex = Math.floor(Math.random() * funFact.funfacts.length);
+        fact = { 'funfact': `${ funFact.funfacts[randomIndex] }` };
+      }
       break;
     case 'capital':
       fact = { 'state': `${state.state}`, 'capital': `${state.capital_city}` }
