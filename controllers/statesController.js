@@ -9,9 +9,20 @@ const getAllStates = async (req, res) => {
 }
 
 const getOneState = async (req, res) => {
-  if (!req?.params?.state) {
+  if (!req?.params?.stateCode) {
+    res.status(400).json({ message: 'Statecode required' });
+    return;
+  } 
 
+  // Verify that stateCode is valid
+  const stateCode = req.params.stateCode.toUpperCase();
+  if (!verifyState(stateCode)) {
+    res.status(400).json({ message: 'Invalid state code' });
+    return;
   }
+
+  const state = data.states.find(s => s.code === stateCode);
+  res.json(state);
 }
 
 const createNewFunfact = async (req, res) => {
@@ -38,11 +49,11 @@ const createNewFunfact = async (req, res) => {
       { $push: { funfacts: req.body.funfacts } },
       { new: true, upsert: true }
     );
-    res.status(200).json(result);
+    res.status(201).json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-module.exports = { getAllStates, createNewFunfact };
+module.exports = { getAllStates, getOneState, createNewFunfact };
