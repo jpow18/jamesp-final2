@@ -71,7 +71,6 @@ const getOneState = async (req, res) => {
     state.funfacts = funFact.funfacts;
     res.json(state);
   }
-
 }
 
 const getOneStateThing = async (req, res) => {
@@ -179,7 +178,6 @@ const patchFunfact = async (req, res) => {
     const stateName = data.states.find(s => s.code === stateCode);
     if (!state) {
       return res.status(404).json({ message: `No Fun Facts found for ${stateName.state}` });
-      
     }
 
     // Check if index is within range of funfacts array
@@ -202,7 +200,6 @@ const patchFunfact = async (req, res) => {
 const deleteFunfact = async (req, res) => {
   // Verify that index property is present in request body
   if (!req?.body?.index) return res.status(400).json({ message: 'State fun fact index value required' });
-
 
   // Subtract 1 from index to adjust for zero-based data array
   const adjustedIndex = req.body.index - 1;
