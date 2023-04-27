@@ -169,14 +169,17 @@ const patchFunfact = async (req, res) => {
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
   console.log(stateCode);
+  const state = await State.findOne({ stateCode: stateCode });
+  
   if (!verifyState(stateCode)) {
     res.status(400).json({ message: 'Invalid state abbreviation parameter' });
     return;
   }
-  try {
-    const state = await State.findOne({ _stateCode: stateCode }).exec();
 
-    if (!'funfacts' in state) {
+  try {
+    const state = await State.findOne({ stateCode: stateCode }).exec();
+
+    if (!state) {
       res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
       return;
     }
