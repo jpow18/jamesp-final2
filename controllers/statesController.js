@@ -158,7 +158,7 @@ const patchFunfact = async (req, res) => {
   }
 
   if (!req?.body?.funfacts) {
-    res.status(400).json({ message: 'State fun facts value required' });
+    res.status(400).json({ message: 'State fun fact value required' });
     return;
   }
 
@@ -175,7 +175,7 @@ const patchFunfact = async (req, res) => {
   try {
     const state = await State.findOne({ stateCode: stateCode });
     if (!state) {
-      res.status(404).json({ message: 'State not found' });
+      res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
       return;
     }
 
