@@ -10,7 +10,6 @@ router.route('/')
 router.route('/:stateCode')
     .get(statesController.getOneState);
 
-
 router.route('/:stateCode/:something')
     .get(statesController.getOneStateThing)
     .post(statesController.createNewFunfact)
@@ -18,8 +17,3 @@ router.route('/:stateCode/:something')
     .delete(statesController.deleteFunfact);
     
 module.exports = router;
-    
-
-    //     .post(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.createNewEmployee)
-    //     .put(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), statesController.updateEmployee)
-    //     .delete(verifyRoles(ROLES_LIST.Admin), statesController.deleteEmployee);
