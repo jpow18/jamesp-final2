@@ -14,8 +14,8 @@ router.route('/:stateCode')
 router.route('/:stateCode/:something')
     .get(statesController.getOneStateThing)
     .post(statesController.createNewFunfact)
-    .patch(statesController.patchFunfact);
-    // .get(statesController.getState);
+    .patch(statesController.patchFunfact)
+    .delete(statesController.deleteFunfact);
     
 module.exports = router;
     
