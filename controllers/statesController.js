@@ -179,13 +179,13 @@ const patchFunfact = async (req, res) => {
 
     const stateName = data.states.find(s => s.code === stateCode);
     if (!state) {
-      return res.status(404).json({ message: `No Fun Facts found for ${stateName}` });
+      return res.status(404).json({ message: `No Fun Facts found for ${stateName.state}` });
       
     }
 
     // Check if index is within range of funfacts array
     if (adjustedIndex < 0 || adjustedIndex >= state.funfacts.length) {
-      res.status(400).json({ message: `No Fun Fact found at that index for ${stateName}` });
+      res.status(400).json({ message: `No Fun Fact found at that index for ${stateName.state}` });
       return;
     }
 
