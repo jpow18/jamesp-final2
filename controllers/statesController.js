@@ -156,13 +156,11 @@ const patchFunfact = async (req, res) => {
     res.status(400).json({ message: 'State fun fact index value required' });
     return;
   }
-
   if (!req?.body?.funfact) {
     res.status(400).json({ message: 'State fun fact value required' });
     return;
   }
 
-  
   // Subtract 1 from index to adjust for zero-based data array
   const adjustedIndex = req.body.index - 1;
 
@@ -200,4 +198,41 @@ const patchFunfact = async (req, res) => {
   }
 }
 
-module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact, patchFunfact };
+const deleteFunfact = async (req, res) => {
+  // Verify that index property is present in request body
+  if (!req?.body?.index) return res.status(400).json({ message: 'State fun fact index value required' });
+
+
+  // Subtract 1 from index to adjust for zero-based data array
+  const adjustedIndex = req.body.index - 1;
+
+  // Verify that stateCode is valid
+  const stateCode = req.params.stateCode.toUpperCase();
+  
+  if (!verifyState(stateCode)) return res.status(400).json({ message: 'Invalid state abbreviation parameter' });
+  try {
+    const state = await State.findOne({ stateCode: stateCode }).exec();
+
+    const stateName = data.states.find(s => s.code === stateCode);
+    if (!state) {
+      return res.status(404).json({ message: `No Fun Facts found for ${stateName.state}` });
+    }
+
+    // Check if index is within range of funfacts array
+    if (adjustedIndex < 0 || adjustedIndex >= state.funfacts.length) {
+      res.status(400).json({ message: `No Fun Fact found at that index for ${stateName.state}` });
+      return;
+    }
+
+    // Remove one item from funfacts array at specified index and save state
+    state.funfacts.splice(adjustedIndex, 1);
+    await state.save();
+
+    res.json(state);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact, patchFunfact , deleteFunfact};
