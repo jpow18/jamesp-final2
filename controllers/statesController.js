@@ -45,8 +45,8 @@ const getAllStates = async (req, res) => {
         }
       }
     }
-    res.json(stateArray);
   }
+  res.json(stateArray);
 }
 
 const getOneState = async (req, res) => {
