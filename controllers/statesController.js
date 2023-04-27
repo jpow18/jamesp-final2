@@ -150,4 +150,46 @@ const createNewFunfact = async (req, res) => {
   }
 }
 
+const patchFunfact = async (req, res) => {
+  // Verify that index and funfact properties are present in request body
+  const { index, funfact } = req.body;
+  if (!index || !funfact) {
+    res.status(400).json({ message: 'Index and funfact properties are required in request body' });
+    return;
+  }
+
+  // Subtract 1 from index to adjust for zero-based data array
+  const adjustedIndex = index - 1;
+
+  // Verify that stateCode is valid
+  const stateCode = req.params.stateCode.toUpperCase();
+  if (!verifyState(stateCode)) {
+    res.status(400).json({ message: 'Invalid state abbreviation parameter' });
+    return;
+  }
+
+  try {
+    const state = await State.findOne({ stateCode: stateCode });
+    if (!state) {
+      res.status(404).json({ message: 'State not found' });
+      return;
+    }
+
+    // Check if index is within range of funfacts array
+    if (adjustedIndex < 0 || adjustedIndex >= state.funfacts.length) {
+      res.status(400).json({ message: 'Index is out of range for funfacts array' });
+      return;
+    }
+
+    // Update funfact at specified index and save state
+    state.funfacts[adjustedIndex] = funfact;
+    await state.save();
+
+    res.json(state);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact };
