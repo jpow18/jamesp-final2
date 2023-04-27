@@ -4,16 +4,49 @@ const State = require('../model/States');
 const verifyState = require('../middleware/verifyState');
 
 const getAllStates = async (req, res) => {
-  // Loop over array held in data.states
-  for(const element of data.states) {
-    const stateCode = element.code;
-    const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
-    if (funFact) {
-      element.funfacts = funFact.funfacts;
+  let stateArray = new Array();
+  // check if query for contigous states has been passed
+  if (!req?.query?.contig) { // if not...
+    for (const element of data.states) {
+      const stateCode = element.code;
+      const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
+      if (funFact) {
+        element.funfacts = funFact.funfacts;
+      }
+      stateArray.push(element);
     }
+  } else { // if so...
+    if (req?.query?.contig === 'true') {
+      for (const element of data.states) {
+        // Skip AK and HI
+        if (element.code === 'AK' || element.code === 'HI')
+          continue;
+        else {
+          const stateCode = element.code;
+          const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
+          if (funFact) {
+            element.funfacts = funFact.funfacts;
+          }
+          stateArray.push(element);
+        }
+      }
+    } else {
+      for (const element of data.states) {
+        // Skip AK and HI
+        if (element.code === 'AK' || element.code === 'HI') {
+          const stateCode = element.code;
+          const funFact = await State.findOne({ stateCode: stateCode }).select('funfacts -_id').exec();
+          if (funFact) {
+            element.funfacts = funFact.funfacts;
+          }
+          stateArray.push(element);
+        } else {
+          continue;
+        }
+      }
+    }
+    res.json(stateArray);
   }
-  
-  res.json(data.states);
 }
 
 const getOneState = async (req, res) => {
