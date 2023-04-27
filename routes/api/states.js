@@ -13,8 +13,8 @@ router.route('/:stateCode')
 
 router.route('/:stateCode/:something')
     .get(statesController.getOneStateThing)
-    .post(statesController.createNewFunfact);
-    // //router.route('/:state')
+    .post(statesController.createNewFunfact)
+    .patch(statesController.patchFunfact);
     // .get(statesController.getState);
     
 module.exports = router;
