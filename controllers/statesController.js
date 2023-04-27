@@ -163,7 +163,7 @@ const patchFunfact = async (req, res) => {
   }
 
   // Subtract 1 from index to adjust for zero-based data array
-  const adjustedIndex = req.body.index - 1;
+  const adjustedIndex = req.body.index;
 
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
