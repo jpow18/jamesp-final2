@@ -196,4 +196,4 @@ const patchFunfact = async (req, res) => {
   }
 }
 
-module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact };
+module.exports = { getAllStates, getOneState, getOneStateThing, createNewFunfact, patchFunfact };
