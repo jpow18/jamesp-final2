@@ -157,24 +157,26 @@ const patchFunfact = async (req, res) => {
     return;
   }
 
-  if (!req?.body?.funfacts) {
+  if (!req?.body?.funfact) {
     res.status(400).json({ message: 'State fun fact value required' });
     return;
   }
 
+  
   // Subtract 1 from index to adjust for zero-based data array
-  const adjustedIndex = req.body.index;
+  const adjustedIndex = req.body.index - 1;
 
   // Verify that stateCode is valid
   const stateCode = req.params.stateCode.toUpperCase();
+  console.log(stateCode);
   if (!verifyState(stateCode)) {
     res.status(400).json({ message: 'Invalid state abbreviation parameter' });
     return;
   }
-
   try {
-    const state = await State.findOne({ stateCode: stateCode });
-    if (!state.funfacts) {
+    const state = await State.findOne({ _stateCode: stateCode }).exec();
+
+    if (!'funfacts' in state) {
       res.status(404).json({ message: `No Fun Facts found for ${state.state}` });
       return;
     }
@@ -186,7 +188,7 @@ const patchFunfact = async (req, res) => {
     }
 
     // Update funfact at specified index and save state
-    state.funfacts[adjustedIndex] = funfact;
+    state.funfacts[adjustedIndex] = req.body.funfact;
     await state.save();
 
     res.json(state);
