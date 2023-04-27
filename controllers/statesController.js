@@ -152,14 +152,13 @@ const createNewFunfact = async (req, res) => {
 
 const patchFunfact = async (req, res) => {
   // Verify that index and funfact properties are present in request body
-  const { index, funfact } = req.body;
-  if (!index) {
+  if (!req?.body?.index) {
     res.status(400).json({ message: 'State fun fact index value required' });
     return;
   }
 
-  if (!funfact) {
-    res.status(400).json({ message: 'State fun fact value required' });
+  if (!req?.body?.funfacts) {
+    res.status(400).json({ message: 'State fun facts value required' });
     return;
   }
 
